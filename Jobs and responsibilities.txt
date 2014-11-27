@@ -10,7 +10,8 @@ GUI
 
 Tracey:
 
-
+player class
+property class?
 
 
 Brian:
