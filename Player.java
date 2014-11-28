@@ -1,19 +1,50 @@
+/** This is the Player class
+ *
+ * @author Tracey Glass
+ * @version 1.0 November 27, 2014
+ */
+
 import java.util.*;
 
 public class Player 
 {
-	private String name;
-	private int token;
-	private List<Property> properties = new ArrayList();
-	private int currentSpace;
-	private int money;
+	private String 	name;
+	private int 	token;
+	private int 	currentSpace;
+	private int		money;
+	private int 	playerNum;
 	
+	/** Get the player number for the player object.
+	 * 
+	 * @return playerNum	the current player number.
+	 */
+	public int getPlayerNum()
+	{
+		return playerNum;
+	}
+	
+	/** Set the player number for the player object.
+	 * 
+	 * @param _playerNum	The new player number
+	 */
+	public void setPlayerNum(int _playerNum)
+	{
+		playerNum = _playerNum;
+	}
+	
+	/** Get the player's screen name for that player object
+	 * 
+	 * @return name		the player's current screen name.
+	 */
 	public String getName()
 	{
 		return name;
 	}
 	
-	//If _name doesn't fit criteria, name is set to null.
+	/** Set the screen name for the player object.
+	 * 
+	 * @param _name		The new screen name
+	 */
 	public void setName(String _name)
 	{
 		if(checkName(_name))
@@ -22,117 +53,66 @@ public class Player
 			name = null;
 	}
 	
+	/** Get the amount of money owned by the current player number.
+	 * 
+	 * @return money	the player's current amount of money.
+	 */
 	public int getMoney()
 	{
 		return money;
 	}
 	
+	/** Set the money amount that the player object has.
+	 * 
+	 * @param _money	The new money amount
+	 */
 	public void setMoney(int _money)
 	{
 		money = _money;
 	}
 	
-	//return true if change worked, false if otherwise.
-	//choice is 0 if adding to the player's money (being paid)
-	//		 is 1 if taking away from player's money (paying)
-	public boolean changeMoney(int _money, int choice)
-	{
-		
-		return false;
-	}
-	
+	/** Get the game space for the player object.
+	 * 
+	 * @return currentSpace		the player's current space.
+	 */
 	public int getCurrentSpace()
 	{
 		return currentSpace;
 	}
 	
+	/** Set the current space the player object is occupying
+	 * 
+	 * @param _currentSpace		The new current space number
+	 */
 	public void setCurrentSpace(int _currentSpace)
 	{
 		currentSpace = _currentSpace;
 	}
 	
+	/** Get the token representing the calling player object.
+	 * 
+	 * @return token		the player's current token.
+	 */
 	public int getToken()
 	{
 		return token;
 	}
 	
+	/** Set the token used by the player object.
+	 * 
+	 * @param _token	The new token 
+	 */
 	public void setToken(int _token)
 	{
 		token = _token;
 	}
 	
-	public List<Property> getProperties()
-	{
-		return properties;
-	}
-	
-	public void setProperties(List<Property> _properties)
-	{	
-		properties = _properties;
-	}
-	
-	//returns true if the property was added correctly, false otherwise
-	public boolean addProperty(Property property)
-	{
-		try
-		{
-			List<Property> _properties = getProperties();
-			_properties.add(property);
-			setProperties(_properties);
-			
-			return true;
-		}
-		catch(Exception e)
-		{
-			return false;
-		}
-		
-	}
-	
-	//If the deletion occurred properly, true is returned, else false is 
-	public boolean deleteProperty(Property property)
-	{
-		List<Property> _properties = getProperties();
-		for(int i = 0; i < _properties.size(); i++)
-		{
-			if(property.equals(_properties.get(i)))
-			{
-				_properties.remove(i);
-				setProperties(_properties);
-				return true;
-			}
-		}
-		return false;
-	}
-	
-	//return true if trade went through, false if otherwise
-	//trade property to a specified player
-	public boolean tradeProperty(Player player, Property property)
-	{
-		try
-		{
-			int playerMoney = player.getMoney();
-			int tradePrice = property.getTradePrice();
-			
-			//Make sure trading player can afford if
-			if(playerMoney >= tradePrice)
-			{
-				player.setMoney(playerMoney - tradePrice);
-				this.setMoney(this.getMoney() + tradePrice);
-				if( player.addProperty(property) && this.deleteProperty(property))
-					return true;
-				return false;
-			}
-			else
-				return false;
-		}
-		catch(Exception e)
-		{
-			return false;	
-		}
-			
-	}
-	
+	/** Checks that the name is a maximum of 10 alphabetic characters only
+	 * 
+	 * @param _name			The player's screen name.
+	 * @return boolean		true if the name fits the requirements.
+	 * 						false if the name doesn't.
+	 */
 	private boolean checkName(String _name)
 	{
 		if(_name.length() > 0 && _name.length() <= 10)
