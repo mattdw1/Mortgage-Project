@@ -3,7 +3,6 @@ When you start working on something, mark it here.
 
 Matt:
 
-property class
 GUI
 
 
