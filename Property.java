@@ -15,6 +15,25 @@ public class Property
 	private int		upgradeCost			= 0;
 	private int[] 	upgradeCostArray	= {0,0,0,0};
 	
+	/** Initialize a property object with an initial price, the name, the array that
+	 *  holds the multiple possible rent prices, and the array that holds the multiple
+	 *  possible upgrade prices.
+	 * 
+	 * @param _price			The buying from the bank
+	 * @param _name				The name of the property
+	 * @param _rentArray		The array that holds the rent prices (5 values)
+	 * @param _upgradeCostArray	The array that holds the upgrade prices (4 values)
+	 */
+	public Property(int _price, String _name, int[] _rentArray, int[] _upgradeCostArray)
+	{
+		price = _price;
+		name = _name;
+		rentArray = _rentArray;
+		upgradeCostArray = _upgradeCostArray;
+		this.setRent();
+		this.setUpgradeCost();
+	}
+	
 	/** Get the current owner of the property object
 	 * 
 	 * @return owner	the current owner of the property
@@ -100,15 +119,23 @@ public class Property
 		return rentArray;
 	}
 	
-	/** Set the array of integers to 5 possible rent values.
+	/** Set the array of integers to 5 possible rent values. Returns null if 
+	 * 	_rentArray is less than or more than 5 values long.
 	 * 
 	 * @param _rentArray	the new integer array that has the 5 possible rent values.
 	 */
 	public void setRentArray(int[] _rentArray)
 	{
-		for(int i = 0; i < _rentArray.length; i++)
+		if(_rentArray.length == 5)
 		{
-			rentArray[i] = _rentArray[i];
+			for(int i = 0; i < _rentArray.length; i++)
+			{
+				rentArray[i] = _rentArray[i];
+			}
+		}
+		else
+		{
+			_rentArray = null;
 		}
 	}
 	
@@ -179,16 +206,22 @@ public class Property
 		return upgradeCostArray;
 	}
 	
-	/** Sets the array that holds the 4 prices to upgrade the property object
+	/** Sets the array that holds the 4 prices to upgrade the property object.
+	 * 	Sets upgradeCostArray to null if _upgradeCostArray isn't 4 values.
 	 * 
 	 * @param _upgradeCostArray		the new upgradeCostArray
 	 */
 	public void setUpgradeCostArry(int[] _upgradeCostArray)
 	{
-		for(int i = 0; i < _upgradeCostArray.length; i++)
+		if(_upgradeCostArray.length == 4)
 		{
-			upgradeCostArray[i] = _upgradeCostArray[i];
+			for(int i = 0; i < _upgradeCostArray.length; i++)
+			{
+				upgradeCostArray[i] = _upgradeCostArray[i];
+			}
 		}
+		else
+			upgradeCostArray = null;
 	}
 	
 	/** Get the cost of upgrading the property object
@@ -220,19 +253,19 @@ public class Property
 	 * @return boolean	true if the player has enough money to upgrade and the
 	 * 					property hasn't had 4 or more upgrades done
 	 */
-	
-	//to do: create upgradeCost getters and setters
-	//use an array (up to four) to store the potential values, pick from there
-	//use an array (up to four) to store the potential rent, pick from there
-	//	getters and setters for each.
 	public boolean upgradeProperty(Player player)
 	{
 		int currentUpgrades = this.getNumOfUpgrades();
 		
-		if(currentUpgrades < 4 && player.getMoney() > this.getUpgradeCost())
+		if(currentUpgrades < 4)
 		{
-			setNumOfUpgrades(currentUpgrades++);
-			return true;
+			if(player.getMoney() > this.getUpgradeCost())
+			{
+				setNumOfUpgrades(++currentUpgrades);
+				return true;
+			}
+			else
+				return false;
 		}
 		else
 			return false;

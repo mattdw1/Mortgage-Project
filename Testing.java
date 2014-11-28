@@ -55,5 +55,28 @@ public class Testing
 		//Checks for empty string		
 		player.setName("");						//0 chars - False
 		System.out.println(player.getName());
+		
+		int[] rentArray = {25,50,75,150,300};
+		int[] upgradeArray = {100,200,300,400};
+		Property prop = new Property(300, "Boardwalk", rentArray, upgradeArray);
+		
+		System.out.println(prop.getPrice());
+		System.out.println(prop.getRent());
+		System.out.println(prop.getUpgradeCost());
+		System.out.println(prop.upgradeProperty(player));
+		System.out.println(prop.getRent());
+		System.out.println(prop.getUpgradeCost());
+		System.out.println(prop.upgradeProperty(player));
+		System.out.println(prop.getRent());
+		System.out.println(prop.getUpgradeCost());
+		System.out.println(prop.upgradeProperty(player));
+		System.out.println(prop.getRent());
+		System.out.println(prop.getUpgradeCost());
+		System.out.println(prop.upgradeProperty(player));
+		System.out.println(prop.getRent());
+		System.out.println(prop.getUpgradeCost());
+		System.out.println(prop.upgradeProperty(player));
+		System.out.println(prop.getRent());
+		System.out.println(prop.getUpgradeCost());
 	}
 }

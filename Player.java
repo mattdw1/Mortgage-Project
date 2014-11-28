@@ -8,11 +8,49 @@ import java.util.*;
 
 public class Player 
 {
-	private String 	name;
-	private int 	token;
-	private int 	currentSpace;
-	private int		money;
-	private int 	playerNum;
+	private String 	name			= "";
+	private int 	token			= 0;
+	private int 	currentSpace	= 0;
+	private int		money			= 0;
+	private int 	playerNum		= 0;
+	private boolean	doubleRoll 		= false;
+	
+	/** Initialize the Player class with a screen name, token, money, and the player number
+	 * 
+	 * @param _name			screen name
+	 * @param _token		token (integer)
+	 * @param _money		money 
+	 * @param _playerNum	player's number
+	 */
+	public Player(String _name, int _token,  int _money, int _playerNum)
+	{
+		name = _name;
+		token = _token;
+		money = _money;
+		playerNum = _playerNum;
+	}
+	
+	/** Initialize the Player class with a screen name, token, and the player number.
+	 *  The initialized money will be $1500.
+	 *  
+	 * @param _name			screen name
+	 * @param _token		token (integer)
+	 * @param _playerNum	player's number
+	 */
+	public Player(String _name, int _token, int _playerNum)
+	{
+		name = _name;
+		token = _token;
+		money = 1500;
+	}
+	
+	/**	Initialize a basic player with a purse of $1500 only.
+	 * 
+	 */
+	public Player()
+	{
+		money = 1500;
+	}
 	
 	/** Get the player number for the player object.
 	 * 
@@ -30,6 +68,24 @@ public class Player
 	public void setPlayerNum(int _playerNum)
 	{
 		playerNum = _playerNum;
+	}
+	
+	/** Return whether or not the roll was a double
+	 * 
+	 * @return	doubleRoll	true if the roll was double, otherwise false
+	 */
+	public boolean isDouble()
+	{
+		return doubleRoll;
+	}
+	
+	/** Set whether or not the roll was a double
+	 * 
+	 * @param _doubleRoll	the outcome of whether the roll is double or not
+	 */
+	public void setDouble(boolean _doubleRoll)
+	{
+		doubleRoll = _doubleRoll;
 	}
 	
 	/** Get the player's screen name for that player object
@@ -115,14 +171,19 @@ public class Player
 	 */
 	private boolean checkName(String _name)
 	{
-		if(_name.length() > 0 && _name.length() <= 10)
+		if(_name.length() > 0)
 		{
-			for(int i = 0; i < _name.length(); i++)
+			if( _name.length() <= 10)
 			{
-				if(!Character.isAlphabetic(_name.charAt(i)) && !(_name.charAt(i) == ' '))
-					return false;
+				for(int i = 0; i < _name.length(); i++)
+				{
+					if(!Character.isAlphabetic(_name.charAt(i)) && !(_name.charAt(i) == ' '))
+						return false;				
+				}
+				return true;
 			}
-			return true;
+			else
+				return false;
 		}
 		else
 			return false;
