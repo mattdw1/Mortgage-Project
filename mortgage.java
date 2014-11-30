@@ -20,7 +20,7 @@ public class mortgage
 	public static void main(String[] args)
 	{
 		//GUI fields, and player data item initialization 
-		Player player = new Player();
+		Player player[] = new Player[4];
 		
 		
 		JFrame gameWindow;
@@ -31,6 +31,7 @@ public class mortgage
 		JLabel turnLabel = new JLabel();
 		JLabel turnNumberLabel = new JLabel();
 		JButton helpButton = new JButton();
+		JButton rollDice = new JButton();
 		
 		//The current turn number.
 		int turn = 1;
@@ -59,6 +60,8 @@ public class mortgage
 		turnNumberLabel.setText("1");
 		
 		helpButton.setText("Help");
+		
+		rollDice.setText("Roll Dice");
 		
 		
 		gameWindow.setSize(1024,768);
@@ -89,6 +92,7 @@ public class mortgage
 		gameWindow.add(turnLabel);
 		gameWindow.add(turnNumberLabel);
 		gameWindow.add(helpButton);
+		gameWindow.add(rollDice);
 		
 		
 		//Set the positions of the icons and  buttons--------------------------------------------------
@@ -115,17 +119,17 @@ public class mortgage
 		
 		nameLabel.setBounds(5, 5, 95, 20);
 		
-		propertyTextArea.setBounds(5, 510, 998, 200);
+		propertyTextArea.setBounds(5, 510, 798, 200);
 
 		nameField.setBounds(100, 5, 120, 20);
 
 		turnLabel.setBounds(5, 65, 30, 20);
 
 		turnNumberLabel.setBounds(40, 65, 50, 20);
-
-		turnNumberLabel.setBounds(40, 65, 50, 20);
 		
-		helpButton.setBounds(250, 5, 90, 55);
+		helpButton.setBounds(250, 5, 90, 55);		
+		
+		rollDice.setBounds(5, 90, 240, 50);
 		
 		
 		
