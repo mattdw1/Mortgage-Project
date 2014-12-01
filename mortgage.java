@@ -1,4 +1,5 @@
 import javax.swing.*;
+
 import java.util.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -15,8 +16,7 @@ public class mortgage
 
 
 	
-	
-	
+
 	public static void main(String[] args)
 	{
 		//GUI fields, and player data item initialization 
@@ -53,7 +53,7 @@ public class mortgage
 		propertyTextArea.setBackground(new Color(200,255,255));
 		propertyTextArea.setBorder(BorderFactory.createLineBorder(Color.black));
 		
-		nameField.setText("Player One");
+		nameField.setText("Player");
 
 		turnLabel.setText("Turn:");
 
@@ -119,7 +119,7 @@ public class mortgage
 		
 		nameLabel.setBounds(5, 5, 95, 20);
 		
-		propertyTextArea.setBounds(5, 510, 798, 200);
+		propertyTextArea.setBounds(5, 510, 598, 200);
 
 		nameField.setBounds(100, 5, 120, 20);
 
@@ -130,6 +130,8 @@ public class mortgage
 		helpButton.setBounds(250, 5, 90, 55);		
 		
 		rollDice.setBounds(5, 90, 240, 50);
+		//disabled until new game is pressed
+		rollDice.setEnabled(false);
 		
 		
 		
@@ -265,6 +267,19 @@ public class mortgage
 						board[i] = new JButton();
 						board[i].setText("Property" +i);
 					}
+					
+					player[0]=new Player();
+					player[0].setName(nameField.getText());
+					
+					if(player[0].getName() == null)
+						player[0] = new Player("Default", 0, 0);
+					
+					for(int i=1; i<4; i++)
+					{
+						player[i] = new Player();
+					}
+					
+					rollDice.setEnabled(true);
 				}
 		});
 		
@@ -275,6 +290,34 @@ public class mortgage
 				{
 					propertyTextArea.setText("Mortgage Prototype - Alpha 1.0\n"
 								+"To Play: Purchase investments to gain profit over time. Don't go bankrupt as the market fluctuates.");
+				}
+		});		
+		
+		rollDice.addActionListener(new ActionListener()
+		{
+				public void actionPerformed(ActionEvent e)
+				{
+					//propertyTextArea.setText("Pure Magic");
+					
+					
+					//stuff
+					
+					//dice rolling
+					
+					//int playerLocation = (player[0].getCurrentSpace()+3)%14;
+					
+					int playerLocation = 3;
+					
+					player[0].setCurrentSpace(playerLocation);
+					
+					propertyTextArea.setText(player[0].getName()+" landed on "+property[playerLocation].getName());
+					
+					if(property[3].getOwner() == -1)
+					{
+						
+					}
+					
+					
 				}
 		});
 		

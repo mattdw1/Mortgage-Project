@@ -8,7 +8,7 @@ public class Property
 	private int 	price				= 0;
 	private String 	name				= "";
 	private int 	tradePrice			= 0;
-	private int 	owner				= 0;
+	private int 	owner				= -1;
 	private int 	rent				= 0;
 	private int[]	rentArray 			= {0,0,0,0,0};
 	private int 	numOfUpgrades		= 0;
