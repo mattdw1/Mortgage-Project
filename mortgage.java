@@ -32,8 +32,8 @@ public class mortgage
 		JLabel turnNumberLabel = new JLabel();
 		JButton helpButton = new JButton();
 		JButton rollDice = new JButton();
-                //!!
-                JButton chance = new JButton();
+		JButton buyButton = new JButton();
+		JButton dontBuyButton = new JButton();
 		
 		//The current turn number.
 		int turn = 1;
@@ -59,13 +59,15 @@ public class mortgage
 
 		turnLabel.setText("Turn:");
 
-		turnNumberLabel.setText("1");
+		turnNumberLabel.setText(Integer.toString(turn));
 		
 		helpButton.setText("Help");
 		
 		rollDice.setText("Roll Dice");
-                //!!
-                chance.setText("*TESTING* Draw Chance");
+		
+		buyButton.setText("Purchase");
+		
+		dontBuyButton.setText("Ignore Investment");
 		
 		
 		gameWindow.setSize(1024,768);
@@ -97,7 +99,8 @@ public class mortgage
 		gameWindow.add(turnNumberLabel);
 		gameWindow.add(helpButton);
 		gameWindow.add(rollDice);
-                gameWindow.add(chance);
+		gameWindow.add(buyButton);
+		gameWindow.add(dontBuyButton);
 		
 		
 		//Set the positions of the icons and  buttons--------------------------------------------------
@@ -137,8 +140,14 @@ public class mortgage
 		rollDice.setBounds(5, 90, 240, 50);
 		//disabled until new game is pressed
 		rollDice.setEnabled(false);
-                //!!
-                chance.setBounds(5, 140, 240, 50);
+		
+		buyButton.setBounds(10+598, 510, 240, 50);
+		//disabled until new game is pressed
+		buyButton.setEnabled(false);
+		
+		dontBuyButton.setBounds(10+598, 565, 240, 50);
+		//disabled until new game is pressed
+		dontBuyButton.setEnabled(false);
 		
 		
 		
@@ -304,7 +313,8 @@ public class mortgage
 		{
 				public void actionPerformed(ActionEvent e)
 				{
-					//propertyTextArea.setText("Pure Magic");
+					rollDice.setEnabled(false);
+					
 					
 					
 					//stuff
@@ -313,29 +323,63 @@ public class mortgage
 					
 					//int playerLocation = (player[0].getCurrentSpace()+3)%14;
 					
-					int playerLocation = 3;
+					int playerLocation = player[0].getCurrentSpace();
+					
+					playerLocation =(playerLocation+3)%14;
 					
 					player[0].setCurrentSpace(playerLocation);
 					
 					propertyTextArea.setText(player[0].getName()+" landed on "+property[playerLocation].getName());
 					
-					if(property[3].getOwner() == -1)
+					if(property[playerLocation].getOwner() == -1)
 					{
-						
+						buyButton.setEnabled(true);
+						dontBuyButton.setEnabled(true);
+						propertyTextArea.setText(propertyTextArea.getText()+"\n\n"
+												+property[playerLocation].getName()+" is unowned! Do you wish to purchase?\n"
+												+"Investment Cost: "+Integer.toString(property[playerLocation].getPrice())+"\n"
+												+"Investment Return: "+Integer.toString(property[playerLocation].getRent())+"\n"
+												+"Upgrade Costs: "+Arrays.toString(property[playerLocation].getUpgradeCostArray())+"\n"
+												+"Interest Income: "+Arrays.toString(property[playerLocation].getRentArray()));
 					}
-					
-					
+					else if(property[playerLocation].getOwner() != 0)
+					{
+						propertyTextArea.setText(propertyTextArea.getText()+"\n\n"
+								+property[playerLocation].getName()+" has already been invested in by someone else...\n"								
+								+"Property Owner: Player "+Integer.toString(property[playerLocation].getOwner())+"\n"
+								+"Investment Cost: "+Integer.toString(property[playerLocation].getPrice())+"\n"
+								+"Investment Return: "+Integer.toString(property[playerLocation].getRent())+"\n"
+								+"Upgrade Costs: "+Arrays.toString(property[playerLocation].getUpgradeCostArray())+"\n"
+								+"Interest Income: "+Arrays.toString(property[playerLocation].getRentArray()));
+					}
 				}
 		});
-                
-                chance.addActionListener(new ActionListener()
+		
+		buyButton.addActionListener(new ActionListener()
 		{
 				public void actionPerformed(ActionEvent e)
 				{
-                                    propertyTextArea.setText("Getting Chance Card:\n");
-                                    pick_chance(propertyTextArea, property, player);
+					buyButton.setEnabled(false);
+					dontBuyButton.setEnabled(false);
+					rollDice.setEnabled(true);
+					propertyTextArea.setText("BuyButton pressed");
+					
+					//AI MOVES HERE
 				}
-		});
+		});		
+		
+		dontBuyButton.addActionListener(new ActionListener()
+		{
+				public void actionPerformed(ActionEvent e)
+				{
+					buyButton.setEnabled(false);
+					dontBuyButton.setEnabled(false);
+					rollDice.setEnabled(true);
+					propertyTextArea.setText("dont buy pressed");
+					
+					//AI MOVES HERE
+				}
+		});		
 		
 		
 		
@@ -356,51 +400,5 @@ public class mortgage
 					+"Interest Income: "+Arrays.toString(property[index].getRentArray()));
 	}
 
-        /*////////////////////////////////////////////////////////////////////////////////
-        //  Chance Cards
-        //
-        //  Brian Fairbanks
-        */////////////////////////////////////////////////////////////////////////////////
-        public static void pick_chance(JTextArea log, Property[] property, Player[] players)
-        {
-            int choice = (int) (Math.random() * (1)+1);
-            
-            log.append("Chance card rolled: " + choice + "\n");
-
-            switch (choice) {
-                case 1:
-                    chance_1(log, players);
-                    break;
-                case 2:
-                    //chance_2();
-                    break;
-                case 3:
-                    //chance_3();
-                    break;
-                case 4:
-                    //chance_4();
-                    break;
-                case 5:
-                    //chance_5();
-                    break;
-            }
-        }
 	
-        // Chance Card
-        // The stock market plummeted!  All players lose (5-25)% of their current funds!
-        static void chance_1(JTextArea log, Player[] players){
-            int value;
-            int percent;
-
-            value = (int) (Math.random() * (25-5))+5;
-            percent = (100-value)/100;
-
-            log.append("The stock market plummeted!  All players lose "+value+"% of their current funds!\n");
-            
-            // for each player, decrease money for rolled ammount
-            for (Player player:players){
-                player.setMoney((int) player.getMoney() * percent);
-                log.append(player.getName()+" now has $" + player.getMoney() + "\n");
-            }
-        }
 }
