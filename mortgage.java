@@ -32,6 +32,8 @@ public class mortgage
 		JLabel turnNumberLabel = new JLabel();
 		JButton helpButton = new JButton();
 		JButton rollDice = new JButton();
+		JButton buyButton = new JButton();
+		JButton dontBuyButton = new JButton();
 		
 		//The current turn number.
 		int turn = 1;
@@ -57,11 +59,15 @@ public class mortgage
 
 		turnLabel.setText("Turn:");
 
-		turnNumberLabel.setText("1");
+		turnNumberLabel.setText(Integer.toString(turn));
 		
 		helpButton.setText("Help");
 		
 		rollDice.setText("Roll Dice");
+		
+		buyButton.setText("Purchase");
+		
+		dontBuyButton.setText("Ignore Investment");
 		
 		
 		gameWindow.setSize(1024,768);
@@ -93,6 +99,8 @@ public class mortgage
 		gameWindow.add(turnNumberLabel);
 		gameWindow.add(helpButton);
 		gameWindow.add(rollDice);
+		gameWindow.add(buyButton);
+		gameWindow.add(dontBuyButton);
 		
 		
 		//Set the positions of the icons and  buttons--------------------------------------------------
@@ -132,6 +140,14 @@ public class mortgage
 		rollDice.setBounds(5, 90, 240, 50);
 		//disabled until new game is pressed
 		rollDice.setEnabled(false);
+		
+		buyButton.setBounds(10+598, 510, 240, 50);
+		//disabled until new game is pressed
+		buyButton.setEnabled(false);
+		
+		dontBuyButton.setBounds(10+598, 565, 240, 50);
+		//disabled until new game is pressed
+		dontBuyButton.setEnabled(false);
 		
 		
 		
@@ -297,7 +313,8 @@ public class mortgage
 		{
 				public void actionPerformed(ActionEvent e)
 				{
-					//propertyTextArea.setText("Pure Magic");
+					rollDice.setEnabled(false);
+					
 					
 					
 					//stuff
@@ -306,20 +323,63 @@ public class mortgage
 					
 					//int playerLocation = (player[0].getCurrentSpace()+3)%14;
 					
-					int playerLocation = 3;
+					int playerLocation = player[0].getCurrentSpace();
+					
+					playerLocation =(playerLocation+3)%14;
 					
 					player[0].setCurrentSpace(playerLocation);
 					
 					propertyTextArea.setText(player[0].getName()+" landed on "+property[playerLocation].getName());
 					
-					if(property[3].getOwner() == -1)
+					if(property[playerLocation].getOwner() == -1)
 					{
-						
+						buyButton.setEnabled(true);
+						dontBuyButton.setEnabled(true);
+						propertyTextArea.setText(propertyTextArea.getText()+"\n\n"
+												+property[playerLocation].getName()+" is unowned! Do you wish to purchase?\n"
+												+"Investment Cost: "+Integer.toString(property[playerLocation].getPrice())+"\n"
+												+"Investment Return: "+Integer.toString(property[playerLocation].getRent())+"\n"
+												+"Upgrade Costs: "+Arrays.toString(property[playerLocation].getUpgradeCostArray())+"\n"
+												+"Interest Income: "+Arrays.toString(property[playerLocation].getRentArray()));
 					}
-					
-					
+					else if(property[playerLocation].getOwner() != 0)
+					{
+						propertyTextArea.setText(propertyTextArea.getText()+"\n\n"
+								+property[playerLocation].getName()+" has already been invested in by someone else...\n"								
+								+"Property Owner: Player "+Integer.toString(property[playerLocation].getOwner())+"\n"
+								+"Investment Cost: "+Integer.toString(property[playerLocation].getPrice())+"\n"
+								+"Investment Return: "+Integer.toString(property[playerLocation].getRent())+"\n"
+								+"Upgrade Costs: "+Arrays.toString(property[playerLocation].getUpgradeCostArray())+"\n"
+								+"Interest Income: "+Arrays.toString(property[playerLocation].getRentArray()));
+					}
 				}
 		});
+		
+		buyButton.addActionListener(new ActionListener()
+		{
+				public void actionPerformed(ActionEvent e)
+				{
+					buyButton.setEnabled(false);
+					dontBuyButton.setEnabled(false);
+					rollDice.setEnabled(true);
+					propertyTextArea.setText("BuyButton pressed");
+					
+					//AI MOVES HERE
+				}
+		});		
+		
+		dontBuyButton.addActionListener(new ActionListener()
+		{
+				public void actionPerformed(ActionEvent e)
+				{
+					buyButton.setEnabled(false);
+					dontBuyButton.setEnabled(false);
+					rollDice.setEnabled(true);
+					propertyTextArea.setText("dont buy pressed");
+					
+					//AI MOVES HERE
+				}
+		});		
 		
 		
 		
