@@ -305,7 +305,7 @@ public class mortgage
 					for(int i=1; i<4; i++)
 					{
 						player[i] = new Player();
-                                                int nnum = (int)(Math.random()*names.length)+1;
+                                                int nnum = (int)(Math.random()*names.length);
                                                 player[i].setName(names[nnum]);
 					}
 					
@@ -333,7 +333,7 @@ public class mortgage
 					
 					//stuff
 					
-					//dice rolling
+					dice_roll(propertyTextArea, player[0]);
 					
 					//int playerLocation = (player[0].getCurrentSpace()+3)%14;
 					
@@ -343,7 +343,7 @@ public class mortgage
 					
 					player[0].setCurrentSpace(playerLocation);
 					
-					propertyTextArea.setText(player[0].getName()+" landed on "+property[playerLocation].getName());
+					propertyTextArea.append(player[0].getName()+" landed on "+property[playerLocation].getName());
 					
 					if(property[playerLocation].getOwner() == -1)
 					{
@@ -421,6 +421,31 @@ public class mortgage
 					+"Upgrade Costs: "+Arrays.toString(property[index].getUpgradeCostArray())+"\n"
 					+"Interest Income: "+Arrays.toString(property[index].getRentArray()));
 	}
+        
+        // Dice rolling function
+        // Takes no input, outputs the total for the roll (between 2 and 12)
+        // also sets the global variable for if doubles were just rolled.
+        public static int dice_roll(JTextArea log, Player player)
+        {
+            int d6_1;
+            int d6_2;
+            int total;
 
+            d6_1 = (int) (Math.random() * 6)+1;
+            d6_2 = (int) (Math.random() * 6)+1;
+            total = d6_1 + d6_2;
+            
+            if( d6_1 == d6_2)
+            {
+                System.out.println("Rolled doubles");
+                //player.setDouble(true);
+            }
+            else
+            {
+                //player.setDouble(false);
+            }
+            log.setText(player.getName() + " rolls :"+ d6_1 +" " + d6_2 +", then moves "+ total + " Spaces\n");
+            return total;
+        }
 	
 }
