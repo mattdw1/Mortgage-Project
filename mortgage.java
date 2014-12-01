@@ -280,6 +280,12 @@ public class mortgage
 		{
 				public void actionPerformed(ActionEvent e)
 				{
+                                    String[] names= {"Aaron","Adam","Alex", "Alice", "Amber", "Ashley",
+                                            "Ben", "Bradley", "Blair", "Bella", "Brandy", "Brook",
+                                            "Cody", "Cole", "Conner", "Chloe", "Christy", "Colette",
+                                            "Dennis", "Derrick", "Diego", "Dakota", "Dawn", "Diane",
+                                            "Tracy", "Brian", "Matthew"
+                                        };
 					propertyTextArea.setText("New Game started. The game board has been cleared.");
 					for(int i = 0; i<14; i++)
 					{
@@ -299,6 +305,8 @@ public class mortgage
 					for(int i=1; i<4; i++)
 					{
 						player[i] = new Player();
+                                                int nnum = (int)(Math.random()*names.length)+1;
+                                                player[i].setName(names[nnum]);
 					}
 					
 					rollDice.setEnabled(true);
