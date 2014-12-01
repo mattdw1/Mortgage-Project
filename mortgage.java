@@ -13,10 +13,6 @@ import java.awt.event.*;
 public class mortgage
 {
 	
-
-
-	
-
 	public static void main(String[] args)
 	{
 		//GUI fields, and player data item initialization 
@@ -40,7 +36,7 @@ public class mortgage
 		int turn = 1;
 		
 		//Whose turn it is currently.
-		int playerTurn = 1;
+		//int playerTurn = 1;
 		
 		gameWindow = new JFrame("Mortgage!");
 		gameWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -52,7 +48,8 @@ public class mortgage
 		nameLabel.setText("Player Name:");
 		
 		propertyTextArea.setText("Mortgage Prototype - Alpha 1.0\n"
-								+"To Play: Purchase investments to gain profit over time. Don't go bankrupt as the market fluctuates.");
+								+"To Play: Purchase investments to gain profit over time. Don't go bankrupt as the market fluctuates.\n"
+								+"The Government takes your money every turn! Try to earn more then they take!");
 		propertyTextArea.setBackground(new Color(200,255,255));
 		propertyTextArea.setBorder(BorderFactory.createLineBorder(Color.black));
 		
@@ -104,7 +101,7 @@ public class mortgage
 		gameWindow.add(rollDice);
 		gameWindow.add(buyButton);
 		gameWindow.add(dontBuyButton);
-                gameWindow.add(chance);
+        gameWindow.add(chance);
 		
 		
 		//Set the positions of the icons and  buttons--------------------------------------------------
@@ -153,7 +150,7 @@ public class mortgage
 		//disabled until new game is pressed
 		dontBuyButton.setEnabled(false);
                 
-                chance.setBounds(5, 150, 240, 50);
+		chance.setBounds(5, 150, 240, 50);
 		
 		
 		
@@ -319,7 +316,8 @@ public class mortgage
 				public void actionPerformed(ActionEvent e)
 				{
 					propertyTextArea.setText("Mortgage Prototype - Alpha 1.0\n"
-								+"To Play: Purchase investments to gain profit over time. Don't go bankrupt as the market fluctuates.");
+							+"To Play: Purchase investments to gain profit over time. Don't go bankrupt as the market fluctuates.\n"
+							+"The Government takes your money every turn! Try to earn more then they take!");
 				}
 		});		
 		
@@ -330,9 +328,8 @@ public class mortgage
 					rollDice.setEnabled(false);
 					
 					
-					
-					//stuff
-					
+					//clear text area for new roll
+					propertyTextArea.setText("");
 					int moveSpaces = dice_roll(propertyTextArea, player[0]);
 					
 					int playerLocation = player[0].getCurrentSpace();
@@ -355,8 +352,9 @@ public class mortgage
 												+"Upgrade Costs: "+Arrays.toString(property[playerLocation].getUpgradeCostArray())+"\n"
 												+"Interest Income: "+Arrays.toString(property[playerLocation].getRentArray()));
 					}
-					else if(property[playerLocation].getOwner() != 0)
+					else
 					{
+						dontBuyButton.setEnabled(true);
 						propertyTextArea.setText(propertyTextArea.getText()+"\n\n"
 												+property[playerLocation].getName()+" has already been invested in by someone else...\n"								
 												+"Property Owner: Player "+Integer.toString(property[playerLocation].getOwner())+" ("+player[property[playerLocation].getOwner()].getName()+")"+"\n"
@@ -386,7 +384,11 @@ public class mortgage
 					else
 						propertyTextArea.setText("Not enough funds to invest.");
 					
-					//AI MOVES HERE
+
+					aiMove(propertyTextArea, property, player);
+					turnOver(propertyTextArea, property, player, rollDice);
+					
+
 				}
 		});		
 		
@@ -399,15 +401,16 @@ public class mortgage
 					rollDice.setEnabled(true);
 					propertyTextArea.setText("dont buy pressed");
 					
-					//AI MOVES HERE
+					aiMove(propertyTextArea, property, player);
+					turnOver(propertyTextArea, property, player, rollDice);
 				}
 		});
                 
-                chance.addActionListener(new ActionListener()
+        chance.addActionListener(new ActionListener()
 		{
 				public void actionPerformed(ActionEvent e)
 				{
-                                    Chance.pick_chance(propertyTextArea, property, player);
+                       Chance.pick_chance(propertyTextArea, property, player);
 				}
 		});
 		
@@ -433,6 +436,81 @@ public class mortgage
 									+"Interest Income: "+Arrays.toString(property[index].getRentArray()));
 							  		
 	}
+	
+	public static void aiMove(JTextArea propertyTextArea, Property[] property, Player[] player)
+	{
+
+		propertyTextArea.setText("AI turn.\n");
+		
+		for(int i=1; i<4;i++)
+		{
+			if(player[i].getMoney()>0)
+			{
+				int moveSpaces = dice_roll(propertyTextArea, player[0]);
+				
+				int playerLocation = player[i].getCurrentSpace();
+				
+				playerLocation =(playerLocation + moveSpaces)%14;
+				
+				player[i].setCurrentSpace(playerLocation);
+		
+				propertyTextArea.append(player[0].getName()+" landed on "+property[playerLocation].getName()+". ");
+				//propertyTextArea.append("Current Money: "+player[0].getMoney()+"\n");
+				
+				if(property[playerLocation].getOwner() == -1)
+				{
+					if(player[i].getMoney()>property[playerLocation].getPrice())
+					{
+						player[i].setMoney(player[i].getMoney()-property[player[i].getCurrentSpace()].getPrice());
+						property[player[i].getCurrentSpace()].setOwner(i);
+						propertyTextArea.append(property[player[i].getCurrentSpace()].getName()+" was purchased by "+player[i].getName()+"\n");
+					}
+						
+				}
+				else if(property[playerLocation].getOwner() != 0)
+				{
+					propertyTextArea.append(player[i].getName()+" moved to " +property[player[i].getCurrentSpace()].getName()+"\n");
+				}
+			}
+		}
+	}
+		
+	
+	public static void turnOver(JTextArea propertyTextArea, Property[] property, Player[] player, JButton rollDice)
+	{
+		
+		for(int i = 0; i<property.length; i++)
+		{
+			if(property[i].getOwner()!=-1)
+				if(player[property[i].getOwner()].getMoney()>=0)
+				{
+					player[property[i].getOwner()].setMoney(player[property[i].getOwner()].getMoney()+property[i].getRent());
+				}
+		}
+		for(int i = 0; i<4; i++)
+		{
+			//TAX TO END THE GAME------------------------------------------------------------------------
+			player[i].setMoney(player[i].getMoney()-300);
+			if(player[i].getMoney()>=0)
+				propertyTextArea.append(player[i].getName()+ " has "+ player[i].getMoney()+"\n");
+		}
+		
+		
+		
+		
+		
+		//Game Win conditions
+		if(player[0].getMoney()<0)
+		{
+			propertyTextArea.append("YOU LOST.");
+			rollDice.setEnabled(false);
+		}
+		else if(player[1].getMoney()<0 && player[2].getMoney()<0 && player[3].getMoney()<0)
+		{
+			propertyTextArea.append("YOU WIN!.");
+			rollDice.setEnabled(false);
+		}
+	}
         
         // Dice rolling function
         // Takes no input, outputs the total for the roll (between 2 and 12)
@@ -456,7 +534,7 @@ public class mortgage
             {
                 //player.setDouble(false);
             }
-            log.setText(player.getName() + " rolls :"+ d6_1 +" " + d6_2 +", then moves "+ total + " Spaces\n");
+            log.append(player.getName() + " rolls :"+ d6_1 +" " + d6_2 +", then moves "+ total + " Spaces\n");
             return total;
         }
 	
