@@ -333,13 +333,11 @@ public class mortgage
 					
 					//stuff
 					
-					dice_roll(propertyTextArea, player[0]);
-					
-					//int playerLocation = (player[0].getCurrentSpace()+3)%14;
+					int moveSpaces = dice_roll(propertyTextArea, player[0]);
 					
 					int playerLocation = player[0].getCurrentSpace();
 					
-					playerLocation =(playerLocation+3)%14;
+					playerLocation =(playerLocation + moveSpaces)%14;
 					
 					player[0].setCurrentSpace(playerLocation);
 					
