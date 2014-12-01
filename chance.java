@@ -19,9 +19,11 @@ public class Chance {
     
     public static void pick_chance(JTextArea log, Property[] properties, Player[] players)
         {
-            int choice = (int) (Math.random() * (3)+1);
+            int choice = (int) (Math.random() * (2)+1);
             
-            log.append("Chance card rolled: " + choice + "\n");
+            log.setText("Chance card rolled: " + choice + "\n");
+            log.append(players[0].getName()+" starts at $" + players[0].getMoney() + "\n");
+            
 
             switch (choice) {
                 case 1:
@@ -46,16 +48,17 @@ public class Chance {
         // The stock market plummeted!  All players lose (5-25)% of their current funds!
         static void chance_1(JTextArea log, Player[] players){
             int value;
-            int percent;
+            double percent;
 
             value = (int) (Math.random() * (25-5))+5;
-            percent = (100-value)/100;
+            percent = (100-value)/100.0;
 
             log.append("The stock market plummeted!  All players lose "+value+"% of their current funds!\n");
             
             // for each player, decrease money for rolled ammount
             for (Player player:players){
-                player.setMoney((int) player.getMoney() * percent);
+                int newMoney = (int)Math.round(player.getMoney() * percent);
+                player.setMoney( newMoney );
                 log.append(player.getName()+" now has $" + player.getMoney() + "\n");
             }
         }
@@ -64,16 +67,18 @@ public class Chance {
         // Great month for the stock market!  All players earn an extra (5-20)% of their current funds!
         static void chance_2(JTextArea log, Player[] players){
             int value;
-            int percent;
+            double percent;
 
             value = (int) (Math.random() * (20-5))+5;
-            percent = ((value)/100)+1;
+            percent = ((value)/100.0)+1;
 
-            log.append("Great month for the stock market!  All players earn an extra "+value+"% of their current funds!");
+            log.append("Great month for the stock market!  All players earn an extra "+value+"% of their current funds!\n");             
+            log.append("this is" + percent + "%.");
             
             // for each player, increase money for rolled ammount
             for (Player player:players){
-                player.setMoney((int) player.getMoney() * percent);
+                int newMoney = (int)Math.round(player.getMoney() * percent);
+                player.setMoney( newMoney );
                 log.append(player.getName()+" now has $" + player.getMoney() + "\n");
             }
         }

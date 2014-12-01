@@ -34,6 +34,7 @@ public class mortgage
 		JButton rollDice = new JButton();
 		JButton buyButton = new JButton();
 		JButton dontBuyButton = new JButton();
+                JButton chance = new JButton();
 		
 		//The current turn number.
 		int turn = 1;
@@ -68,6 +69,8 @@ public class mortgage
 		buyButton.setText("Purchase");
 		
 		dontBuyButton.setText("Ignore Investment");
+                
+                chance.setText("*TEST* Draw Chance Card");
 		
 		
 		gameWindow.setSize(1024,768);
@@ -101,6 +104,7 @@ public class mortgage
 		gameWindow.add(rollDice);
 		gameWindow.add(buyButton);
 		gameWindow.add(dontBuyButton);
+                gameWindow.add(chance);
 		
 		
 		//Set the positions of the icons and  buttons--------------------------------------------------
@@ -148,6 +152,8 @@ public class mortgage
 		dontBuyButton.setBounds(10+598, 565, 240, 50);
 		//disabled until new game is pressed
 		dontBuyButton.setEnabled(false);
+                
+                chance.setBounds(5, 150, 240, 50);
 		
 		
 		
@@ -379,7 +385,15 @@ public class mortgage
 					
 					//AI MOVES HERE
 				}
-		});		
+		});
+                
+                chance.addActionListener(new ActionListener()
+		{
+				public void actionPerformed(ActionEvent e)
+				{
+                                    Chance.pick_chance(propertyTextArea, property, player);
+				}
+		});
 		
 		
 		
