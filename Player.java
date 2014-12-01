@@ -24,10 +24,10 @@ public class Player
 	 */
 	public Player(String _name, int _token,  int _money, int _playerNum)
 	{
-		name = _name;
-		token = _token;
-		money = _money;
-		playerNum = _playerNum;
+		this.setName(_name);
+		this.setToken(_token);
+		this.setMoney(_money);
+		this.setPlayerNum(_playerNum);
 	}
 	
 	/** Initialize the Player class with a screen name, token, and the player number.
@@ -39,9 +39,10 @@ public class Player
 	 */
 	public Player(String _name, int _token, int _playerNum)
 	{
-		name = _name;
-		token = _token;
-		money = 1500;
+		this.setName(_name);
+		this.setToken(_token);
+		this.setMoney(1500);
+		this.setPlayerNum(_playerNum);
 	}
 	
 	/**	Initialize a basic player with a purse of $1500 only.
@@ -49,7 +50,7 @@ public class Player
 	 */
 	public Player()
 	{
-		money = 1500;
+		this.setMoney(1500);
 	}
 	
 	/** Get the player number for the player object.

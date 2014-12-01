@@ -8,7 +8,7 @@ public class Property
 	private int 	price				= 0;
 	private String 	name				= "";
 	private int 	tradePrice			= 0;
-	private int 	owner				= -1;
+	private int 	owner				= 0;
 	private int 	rent				= 0;
 	private int[]	rentArray 			= {0,0,0,0,0};
 	private int 	numOfUpgrades		= 0;
@@ -26,10 +26,10 @@ public class Property
 	 */
 	public Property(int _price, String _name, int[] _rentArray, int[] _upgradeCostArray)
 	{
-		price = _price;
-		name = _name;
-		rentArray = _rentArray;
-		upgradeCostArray = _upgradeCostArray;
+		this.setPrice(_price);
+		this.setName(_name);
+		this.setRentArray(_rentArray);
+		this.setUpgradeCostArry(_upgradeCostArray);
 		this.setRent();
 		this.setUpgradeCost();
 	}
@@ -135,7 +135,7 @@ public class Property
 		}
 		else
 		{
-			_rentArray = null;
+			//Keep the previous value of rentArray
 		}
 	}
 	
@@ -221,7 +221,9 @@ public class Property
 			}
 		}
 		else
-			upgradeCostArray = null;
+		{
+			//Keep the array as is
+		}
 	}
 	
 	/** Get the cost of upgrading the property object

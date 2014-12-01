@@ -4,6 +4,14 @@ public class Testing
 	public static void main(String[] args)
 	{
 		Player player = new Player();
+		Player player2 = new Player("Julia", 2, 1500, 2);
+		Player player3 = new Player("Matt", 3, 3);
+		
+		player.setCurrentSpace(3);
+		System.out.println(player.getCurrentSpace());
+		System.out.println(player2.getToken());
+		player3.setDouble(true);
+		System.out.println(player3.isDouble());
 		
 		//One character
 		player.setName("T");					//1 char - True
@@ -57,9 +65,25 @@ public class Testing
 		System.out.println(player.getName());
 		
 		int[] rentArray = {25,50,75,150,300};
+		int[] badRentArray = {25};
 		int[] upgradeArray = {100,200,300,400};
+		int[] badUpgradeArray = {100,200,300,400};
 		Property prop = new Property(300, "Boardwalk", rentArray, upgradeArray);
+		prop.setRentArray(badRentArray);
+		prop.setUpgradeCostArry(badUpgradeArray);
 		
+		System.out.println(prop.getOwner());
+		
+		prop.setOwner(player.getPlayerNum());
+		
+		System.out.println(prop.getOwner());
+		
+		prop.setTradePrice(1800);
+		prop.tradeProperty(player, player2);
+		prop.setTradePrice(100);
+		prop.tradeProperty(player, player2);
+		
+		System.out.println(prop.getName());
 		System.out.println(prop.getPrice());
 		System.out.println(prop.getRent());
 		System.out.println(prop.getUpgradeCost());
@@ -72,6 +96,9 @@ public class Testing
 		System.out.println(prop.upgradeProperty(player));
 		System.out.println(prop.getRent());
 		System.out.println(prop.getUpgradeCost());
+		player.setMoney(0);
+		System.out.println(prop.upgradeProperty(player));
+		player.setMoney(1500);
 		System.out.println(prop.upgradeProperty(player));
 		System.out.println(prop.getRent());
 		System.out.println(prop.getUpgradeCost());
