@@ -357,7 +357,7 @@ public class mortgage
 						buyButton.setEnabled(false);
 						dontBuyButton.setEnabled(true);
 						propertyTextArea.setText(propertyTextArea.getText()+"\n\n"
-												+property[playerLocation].getName()+" has already been invested in by someone else...\n"								
+												+property[playerLocation].getName()+" is unavailable for purchase.\n"								
 											//			+"Property Owner: Player "+Integer.toString(property[playerLocation].getOwner())+" ("+player[property[playerLocation].getOwner()].getName()+")"+"\n"
 														+"Property Owner: Player number "+Integer.toString(property[playerLocation].getOwner())+"\n"
 												+"Investment Cost: "+Integer.toString(property[playerLocation].getPrice())+"\n"
@@ -492,7 +492,7 @@ public class mortgage
 		for(int i = 0; i<4; i++)
 		{
 			//TAX TO END THE GAME------------------------------------------------------------------------
-			player[i].setMoney(player[i].getMoney()-300);
+			player[i].setMoney(player[i].getMoney()-350);
 			if(player[i].getMoney()>=0)
 				propertyTextArea.append(player[i].getName()+ " has "+ player[i].getMoney()+"\n");
 		}
