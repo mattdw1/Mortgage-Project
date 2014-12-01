@@ -30,7 +30,7 @@ public class mortgage
 		JButton rollDice = new JButton();
 		JButton buyButton = new JButton();
 		JButton dontBuyButton = new JButton();
-                JButton chance = new JButton();
+        JButton chance = new JButton();
 		
 		//The current turn number.
 		int turn = 1;
@@ -341,7 +341,7 @@ public class mortgage
 					propertyTextArea.append(player[0].getName()+" landed on "+property[playerLocation].getName()+"\n");
 					propertyTextArea.append("Current Money: "+player[0].getMoney()+"\n");
 					
-					if(property[playerLocation].getOwner() == -1)
+					if(property[playerLocation].getOwner() == -1 && player[0].getMoney() > property[playerLocation].getPrice() )
 					{
 						buyButton.setEnabled(true);
 						dontBuyButton.setEnabled(true);
@@ -354,10 +354,12 @@ public class mortgage
 					}
 					else
 					{
+						buyButton.setEnabled(false);
 						dontBuyButton.setEnabled(true);
 						propertyTextArea.setText(propertyTextArea.getText()+"\n\n"
 												+property[playerLocation].getName()+" has already been invested in by someone else...\n"								
-												+"Property Owner: Player "+Integer.toString(property[playerLocation].getOwner())+" ("+player[property[playerLocation].getOwner()].getName()+")"+"\n"
+											//			+"Property Owner: Player "+Integer.toString(property[playerLocation].getOwner())+" ("+player[property[playerLocation].getOwner()].getName()+")"+"\n"
+														+"Property Owner: Player number "+Integer.toString(property[playerLocation].getOwner())+"\n"
 												+"Investment Cost: "+Integer.toString(property[playerLocation].getPrice())+"\n"
 												+"Investment Return: "+Integer.toString(property[playerLocation].getRent())+"\n"
 												+"Upgrade Costs: "+Arrays.toString(property[playerLocation].getUpgradeCostArray())+"\n"
