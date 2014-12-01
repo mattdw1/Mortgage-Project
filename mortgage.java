@@ -167,7 +167,7 @@ public class mortgage
 		{
 		  public void actionPerformed(ActionEvent e)
 		  {
-			  updatePropertyTextArea(0, propertyTextArea, property);
+			  updatePropertyTextArea(0, propertyTextArea, property, player);
 		  }
 		});
 
@@ -175,7 +175,7 @@ public class mortgage
 		{
 		  public void actionPerformed(ActionEvent e)
 		  {
-			  updatePropertyTextArea(1, propertyTextArea, property);
+			  updatePropertyTextArea(1, propertyTextArea, property, player);
 		  }
 		});
 
@@ -183,7 +183,7 @@ public class mortgage
 		{
 		  public void actionPerformed(ActionEvent e)
 		  {
-			  updatePropertyTextArea(2, propertyTextArea, property);
+			  updatePropertyTextArea(2, propertyTextArea, property, player);
 		  }
 		});
 
@@ -191,7 +191,7 @@ public class mortgage
 		{
 		  public void actionPerformed(ActionEvent e)
 		  {
-			  updatePropertyTextArea(3, propertyTextArea, property);
+			  updatePropertyTextArea(3, propertyTextArea, property, player);
 		  }
 		});
 
@@ -199,7 +199,7 @@ public class mortgage
 		{
 		  public void actionPerformed(ActionEvent e)
 		  {
-			  updatePropertyTextArea(4, propertyTextArea, property);
+			  updatePropertyTextArea(4, propertyTextArea, property, player);
 		  }
 		});
 
@@ -207,7 +207,7 @@ public class mortgage
 		{
 		  public void actionPerformed(ActionEvent e)
 		  {
-			  updatePropertyTextArea(5, propertyTextArea, property);
+			  updatePropertyTextArea(5, propertyTextArea, property, player);
 		  }
 		});
 
@@ -215,7 +215,7 @@ public class mortgage
 		{
 		  public void actionPerformed(ActionEvent e)
 		  {
-			  updatePropertyTextArea(6, propertyTextArea, property);
+			  updatePropertyTextArea(6, propertyTextArea, property, player);
 		  }
 		});
 
@@ -223,7 +223,7 @@ public class mortgage
 		{
 		  public void actionPerformed(ActionEvent e)
 		  {
-			  updatePropertyTextArea(7, propertyTextArea, property);
+			  updatePropertyTextArea(7, propertyTextArea, property, player);
 		  }
 		});
 
@@ -231,7 +231,7 @@ public class mortgage
 		{
 		  public void actionPerformed(ActionEvent e)
 		  {
-			  updatePropertyTextArea(8, propertyTextArea, property);
+			  updatePropertyTextArea(8, propertyTextArea, property, player);
 		  }
 		});
 
@@ -239,7 +239,7 @@ public class mortgage
 		{
 		  public void actionPerformed(ActionEvent e)
 		  {
-			  updatePropertyTextArea(9, propertyTextArea, property);
+			  updatePropertyTextArea(9, propertyTextArea, property, player);
 		  }
 		});
 
@@ -247,7 +247,7 @@ public class mortgage
 		{
 		  public void actionPerformed(ActionEvent e)
 		  {
-			  updatePropertyTextArea(10, propertyTextArea, property);
+			  updatePropertyTextArea(10, propertyTextArea, property, player);
 		  }
 		});
 
@@ -255,7 +255,7 @@ public class mortgage
 		{
 		  public void actionPerformed(ActionEvent e)
 		  {
-			  updatePropertyTextArea(11, propertyTextArea, property);
+			  updatePropertyTextArea(11, propertyTextArea, property, player);
 		  }
 		});
 
@@ -263,7 +263,7 @@ public class mortgage
 		{
 		  public void actionPerformed(ActionEvent e)
 		  {
-			  updatePropertyTextArea(12, propertyTextArea, property);
+			  updatePropertyTextArea(12, propertyTextArea, property, player);
 		  }
 		});
 
@@ -271,7 +271,7 @@ public class mortgage
 		{
 		  public void actionPerformed(ActionEvent e)
 		  {
-			  updatePropertyTextArea(13, propertyTextArea, property);
+			  updatePropertyTextArea(13, propertyTextArea, property, player);
 		  }
 		});
 		
@@ -340,8 +340,9 @@ public class mortgage
 					playerLocation =(playerLocation + moveSpaces)%14;
 					
 					player[0].setCurrentSpace(playerLocation);
-					
-					propertyTextArea.append(player[0].getName()+" landed on "+property[playerLocation].getName());
+
+					propertyTextArea.append(player[0].getName()+" landed on "+property[playerLocation].getName()+"\n");
+					propertyTextArea.append("Current Money: "+player[0].getMoney()+"\n");
 					
 					if(property[playerLocation].getOwner() == -1)
 					{
@@ -357,12 +358,12 @@ public class mortgage
 					else if(property[playerLocation].getOwner() != 0)
 					{
 						propertyTextArea.setText(propertyTextArea.getText()+"\n\n"
-								+property[playerLocation].getName()+" has already been invested in by someone else...\n"								
-								+"Property Owner: Player "+Integer.toString(property[playerLocation].getOwner())+"\n"
-								+"Investment Cost: "+Integer.toString(property[playerLocation].getPrice())+"\n"
-								+"Investment Return: "+Integer.toString(property[playerLocation].getRent())+"\n"
-								+"Upgrade Costs: "+Arrays.toString(property[playerLocation].getUpgradeCostArray())+"\n"
-								+"Interest Income: "+Arrays.toString(property[playerLocation].getRentArray()));
+												+property[playerLocation].getName()+" has already been invested in by someone else...\n"								
+												+"Property Owner: Player "+Integer.toString(property[playerLocation].getOwner())+" ("+player[property[playerLocation].getOwner()].getName()+")"+"\n"
+												+"Investment Cost: "+Integer.toString(property[playerLocation].getPrice())+"\n"
+												+"Investment Return: "+Integer.toString(property[playerLocation].getRent())+"\n"
+												+"Upgrade Costs: "+Arrays.toString(property[playerLocation].getUpgradeCostArray())+"\n"
+												+"Interest Income: "+Arrays.toString(property[playerLocation].getRentArray()));
 					}
 				}
 		});
@@ -374,7 +375,16 @@ public class mortgage
 					buyButton.setEnabled(false);
 					dontBuyButton.setEnabled(false);
 					rollDice.setEnabled(true);
-					propertyTextArea.setText("BuyButton pressed");
+					if(player[0].getMoney()>property[player[0].getCurrentSpace()].getPrice())
+					{
+						player[0].setMoney(player[0].getMoney()-property[player[0].getCurrentSpace()].getPrice());
+						property[player[0].getCurrentSpace()].setOwner(0);
+						board[player[0].getCurrentSpace()].setBackground(new Color(200,255,255));
+						propertyTextArea.setText("Property Purchased!");
+						
+					}
+					else
+						propertyTextArea.setText("Not enough funds to invest.");
 					
 					//AI MOVES HERE
 				}
@@ -409,15 +419,19 @@ public class mortgage
 		
 	}
 	
-	public static void updatePropertyTextArea(int index, JTextArea propertyTextArea, Property[] property)
+	public static void updatePropertyTextArea(int index, JTextArea propertyTextArea, Property[] property, Player[] player)
 	{
 		  propertyTextArea.setText("Property Selected\n"
-	  				+"Property Name: "+ property[index].getName()+"\n"
-	  				+"Property Owner: Player "+Integer.toString(property[index].getOwner())+"\n"
-			  		+"Investment Cost: "+Integer.toString(property[index].getPrice())+"\n"
-					+"Investment Return: "+Integer.toString(property[index].getRent())+"\n"
-					+"Upgrade Costs: "+Arrays.toString(property[index].getUpgradeCostArray())+"\n"
-					+"Interest Income: "+Arrays.toString(property[index].getRentArray()));
+	  				+"Property Name: "+ property[index].getName()+"\n");
+		  if(property[index].getOwner()==-1)
+		  { propertyTextArea.append("Property Owner: Unowned!\n ");}
+		  else
+			  propertyTextArea.append("Property Owner: "+player[property[index].getOwner()].getName()+"\n");
+		  propertyTextArea.append("Investment Cost: "+Integer.toString(property[index].getPrice())+"\n"
+									+"Investment Return: "+Integer.toString(property[index].getRent())+"\n"
+									+"Upgrade Costs: "+Arrays.toString(property[index].getUpgradeCostArray())+"\n"
+									+"Interest Income: "+Arrays.toString(property[index].getRentArray()));
+							  		
 	}
         
         // Dice rolling function
