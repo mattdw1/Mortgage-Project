@@ -448,7 +448,7 @@ public class mortgage
 		{
 			if(player[i].getMoney()>0)
 			{
-				int moveSpaces = dice_roll(propertyTextArea, player[0]);
+				int moveSpaces = dice_roll(propertyTextArea, player[i]);
 				
 				int playerLocation = player[i].getCurrentSpace();
 				
@@ -456,7 +456,7 @@ public class mortgage
 				
 				player[i].setCurrentSpace(playerLocation);
 		
-				propertyTextArea.append(player[0].getName()+" landed on "+property[playerLocation].getName()+". ");
+				propertyTextArea.append(" to "+property[playerLocation].getName()+". \n");
 				//propertyTextArea.append("Current Money: "+player[0].getMoney()+"\n");
 				
 				if(property[playerLocation].getOwner() == -1)
@@ -527,16 +527,19 @@ public class mortgage
             d6_2 = (int) (Math.random() * 6)+1;
             total = d6_1 + d6_2;
             
+            log.append(player.getName() + " rolls :"+ d6_1 +" " + d6_2);
+            
             if( d6_1 == d6_2)
             {
-                System.out.println("Rolled doubles");
-                //player.setDouble(true);
+                log.append(" (Doubles!)");
+                player.setDouble(true);
             }
             else
             {
-                //player.setDouble(false);
+                player.setDouble(false);
             }
-            log.append(player.getName() + " rolls :"+ d6_1 +" " + d6_2 +", then moves "+ total + " Spaces\n");
+            log.append(", then moves "+ total + " Spaces");
+
             return total;
         }
 	
