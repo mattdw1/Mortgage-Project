@@ -59,7 +59,7 @@ pre-condition 31-44: (property[i].getOwner() !=-1)
 			chance										expected outcome
 45			(clicked)									No program change
 
-pre-condition 46: Game started
+test case 46 extends test case 1-5
 
 			chance										expected outcome
 46			(clicked)									Random chance card played.
