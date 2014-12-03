@@ -338,7 +338,7 @@ public class mortgage
 					
 					player[0].setCurrentSpace(playerLocation);
 
-					propertyTextArea.append(player[0].getName()+" landed on "+property[playerLocation].getName()+"\n");
+					propertyTextArea.append(" to "+property[playerLocation].getName()+"\n");
 					propertyTextArea.append("Current Money: "+player[0].getMoney()+"\n");
 					
 					if(property[playerLocation].getOwner() == -1 && player[0].getMoney() > property[playerLocation].getPrice() )

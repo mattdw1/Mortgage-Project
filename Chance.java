@@ -1,4 +1,3 @@
-
 import javax.swing.JTextArea;
 
 /** This is the Chance card class.
@@ -104,15 +103,15 @@ public class Chance {
         }
         
         // Chance Card
-        // Flash Floods!  Renovations cost $(25-100) for each property owned!
+        // Bank Error!  Each player gives (5-20)% of their money to the player on the left!
         static void chance_4(JTextArea log, Player[] players){
             int value;
             double percent;
             
             value = (int) (Math.random() * (20-5))+5;
-            percent = (100-value)/100.0;
+            percent = (value)/100.0;
 
-            log.append("Bank Error!  Each player passes "+value+"% of their money to the player on the left!\n");
+            log.append("Bank Error!  Each player gives "+value+"% of their money to the player on the left!\n");
             int monArr[] = new int [ players.length ];
 
             // get get percentages all at once
