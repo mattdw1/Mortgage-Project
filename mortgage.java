@@ -1,3 +1,5 @@
+package mortgage;
+
 import javax.swing.*;
 
 import java.util.*;
@@ -12,9 +14,9 @@ import java.awt.event.*;
 */
 public class mortgage
 {
-	
 	public static void main(String[] args)
 	{
+            
 		//GUI fields, and player data item initialization 
 		Player player[] = new Player[4];
 		
@@ -334,12 +336,23 @@ public class mortgage
 					
 					int playerLocation = player[0].getCurrentSpace();
 					
-					playerLocation =(playerLocation + moveSpaces)%14;
+                                        int lastLoc = playerLocation;
+					
+                                        playerLocation =(playerLocation + moveSpaces)%14;
+                                        
 					
 					player[0].setCurrentSpace(playerLocation);
 
 					propertyTextArea.append(" to "+property[playerLocation].getName()+"\n");
-					propertyTextArea.append("Current Money: "+player[0].getMoney()+"\n");
+                                        
+                                        // if they moved to a lower location by going forward, then they must have passed go.
+                                        if( lastLoc > playerLocation ){ 
+                                            propertyTextArea.append("You passed go, and collect $200!");
+                                            player[0].setMoney( player[0].getMoney()+200 );
+                                        }
+                                        propertyTextArea.append("\n");
+					
+                                        propertyTextArea.append("Current Money: "+player[0].getMoney()+"\n");
 					
 					if(property[playerLocation].getOwner() == -1 && player[0].getMoney() > property[playerLocation].getPrice() )
 					{
@@ -452,11 +465,20 @@ public class mortgage
 				
 				int playerLocation = player[i].getCurrentSpace();
 				
+                                int lastLoc = playerLocation;
+                                
 				playerLocation =(playerLocation + moveSpaces)%14;
-				
+                                
 				player[i].setCurrentSpace(playerLocation);
 		
-				propertyTextArea.append(" to "+property[playerLocation].getName()+". \n");
+				propertyTextArea.append(" to "+property[playerLocation].getName()+".");
+                                
+                                // if they moved to a lower location by going forward, then they must have passed go.
+                                if( lastLoc > playerLocation ){ 
+                                    propertyTextArea.append("They passed go, and collect $200.");
+                                    player[0].setMoney( player[0].getMoney()+200 );
+                                }
+                                propertyTextArea.append("\n");
 				//propertyTextArea.append("Current Money: "+player[0].getMoney()+"\n");
 				
 				if(property[playerLocation].getOwner() == -1)
