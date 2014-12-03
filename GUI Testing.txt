@@ -1,0 +1,66 @@
+GUI Test Cases
+All Test cases from clean program launch unless otherwise indicated.
+
+Test Number	Inputs							expected output
+			nameField	newGame				
+1			Player		(clicked)			player[0].getName() == Player 		//nameField's default Name
+2			Playerrrrr	(clicked)			player[0].getName() == Playerrrrr 	//Max length name
+3			P			(clicked)			player[0].getName() == P			//Min length name
+4			(BLANK)		(clicked)			player[0].getName() == Default		//no name entered
+5			EXCEEDSMAXL	(clicked)			player[0].getName() == Default		//max length exceeded
+			
+			rollDice						expected output
+6			(clicked)						No program change
+
+
+Test cases 7-22 extend test cases 1-5.
+
+			rollDice						expected output
+7			(clicked)						player moves from initial point around the board.
+8			(clicked)						player[0].getMoney() == 1500
+
+			board[0]						expected output
+9			(clicked)						propertyTextArea filled with information about property 0 (unowned, initial values)
+
+			board[1]						expected output
+10			(clicked)						propertyTextArea filled with information about property 1 (unowned, initial values)
+
+22			...etc until board[14]
+
+
+pre-condition 23-25:(property[i].getOwner() ==-1, player[0].getCurrentSpace() == i, player[0].getMoney() >= property[i].getPrice())
+
+			rollDice	buyButton	dontBuyButton		expected outcome
+23			(clicked)									No program change
+24						(clicked)						property[i].getOwner()==0
+25									(clicked)			property[i].getOwner()==-1
+
+			buyButton	dontBuyButton					expected outcome
+26			(clicked)									No program change
+27						(clicked)						No program change
+
+pre-condition 28-30:(property[i].getOwner() ==-1, player[0].getCurrentSpace() == i, player[0].getMoney() < property[i].getPrice())
+
+			rollDice	buyButton	dontBuyButton		expected outcome
+28			(clicked)									No program change
+29						(clicked)						No program change
+30									(clicked)			dontBuyButton disabled, rollDice enabled, aiMove called.
+
+pre-condition 31-44: (property[i].getOwner() !=-1)
+
+			board[0]									expected outcome
+31			(clicked)									propertyTextArea filled with information about property 0 (owned, current values)
+
+			board[1]									expected outcome
+32			(clicked)									propertyTextArea filled with information about property 1 (owned, current values)
+
+44			...etc until board[14]
+
+			chance										expected outcome
+45			(clicked)									No program change
+
+pre-condition 46: Game started
+
+			chance										expected outcome
+46			(clicked)									Random chance card played.
+
