@@ -151,7 +151,7 @@ public class mortgage
 		dontBuyButton.setEnabled(false);
                 
 		chance.setBounds(5, 150, 240, 50);
-		
+		chance.setEnabled(false);
 		
 		
 
@@ -307,6 +307,7 @@ public class mortgage
 					}
 					
 					rollDice.setEnabled(true);
+					chance.setEnabled(true);
 				}
 		});
 		
