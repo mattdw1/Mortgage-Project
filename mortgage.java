@@ -369,7 +369,7 @@ public class mortgage
 												+"Upgrade Costs: "+Arrays.toString(property[playerLocation].getUpgradeCostArray())+"\n"
 												+"Interest Income: "+Arrays.toString(property[playerLocation].getRentArray()));
 					}
-                                        else if(property[playerLocation].getOwner() == -1)
+					else if(property[playerLocation].getOwner() == -1)
 					{
 						buyButton.setEnabled(false);
 						dontBuyButton.setEnabled(true);
