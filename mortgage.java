@@ -41,7 +41,7 @@ public class mortgage
 		gameWindow = new JFrame("Mortgage!");
 		gameWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		//Set the text on certian buttons -----------------------------------------------------------------
+		//Set the text on certain buttons -----------------------------------------------------------------
 		
 		newGame.setText("New Game!");
 		
@@ -277,12 +277,12 @@ public class mortgage
 		{
 				public void actionPerformed(ActionEvent e)
 				{
-                                    String[] names= {"Aaron","Adam","Alex", "Alice", "Amber", "Ashley",
-                                            "Ben", "Bradley", "Blair", "Bella", "Brandy", "Brook",
-                                            "Cody", "Cole", "Conner", "Chloe", "Christy", "Colette",
-                                            "Dennis", "Derrick", "Diego", "Dakota", "Dawn", "Diane",
-                                            "Tracy", "Brian", "Matthew"
-                                        };
+					String[] names= {"Aaron","Adam","Alex", "Alice", "Amber", "Ashley",
+									"Ben", "Bradley", "Blair", "Bella", "Brandy", "Brook",
+									"Cody", "Cole", "Conner", "Chloe", "Christy", "Colette",
+									"Dennis", "Derrick", "Diego", "Dakota", "Dawn", "Diane",
+									"Tracy", "Brian", "Matthew"
+									};
 					propertyTextArea.setText("New Game started. The game board has been cleared.");
 					for(int i = 0; i<14; i++)
 					{
@@ -302,8 +302,8 @@ public class mortgage
 					for(int i=1; i<4; i++)
 					{
 						player[i] = new Player();
-                                                int nnum = (int)(Math.random()*names.length);
-                                                player[i].setName(names[nnum]);
+						int nnum = (int)(Math.random()*names.length);
+						player[i].setName(names[nnum]);
 					}
 					
 					rollDice.setEnabled(true);
@@ -331,12 +331,6 @@ public class mortgage
 					//clear text area for new roll
 					propertyTextArea.setText("");
 					int moveSpaces = dice_roll(propertyTextArea, player[0]);
-                                        
-                                        while(player[0].isDouble())
-                                        {
-                                            propertyTextArea.append("Rolling Again!: ");
-                                            moveSpaces += dice_roll(propertyTextArea, player[0]);
-                                        }
 					
 					int playerLocation = player[0].getCurrentSpace();
 					
@@ -347,11 +341,11 @@ public class mortgage
 					
 					player[0].setCurrentSpace(playerLocation);
 
-					propertyTextArea.append( "then moves "+ moveSpaces + " spaces to "+property[playerLocation].getName());
+					propertyTextArea.append(" to "+property[playerLocation].getName()+"\n");
                                         
                                         // if they moved to a lower location by going forward, then they must have passed go.
-                                        if( lastLoc > playerLocation | moveSpaces > 14){ 
-                                            propertyTextArea.append(player[0].getName()+" passed go, and collect $200!");
+                                        if( lastLoc > playerLocation ){ 
+                                            propertyTextArea.append("You passed go, and collect $200!");
                                             player[0].setMoney( player[0].getMoney()+200 );
                                         }
                                         propertyTextArea.append("\n");
@@ -369,7 +363,7 @@ public class mortgage
 												+"Upgrade Costs: "+Arrays.toString(property[playerLocation].getUpgradeCostArray())+"\n"
 												+"Interest Income: "+Arrays.toString(property[playerLocation].getRentArray()));
 					}
-                                        else if(property[playerLocation].getOwner() == -1)
+					else if(property[playerLocation].getOwner() == -1)
 					{
 						buyButton.setEnabled(false);
 						dontBuyButton.setEnabled(true);
@@ -381,7 +375,7 @@ public class mortgage
 												+"Investment Return: "+Integer.toString(property[playerLocation].getRent())+"\n"
 												+"Upgrade Costs: "+Arrays.toString(property[playerLocation].getUpgradeCostArray())+"\n"
 												+"Interest Income: "+Arrays.toString(property[playerLocation].getRentArray()));
-					}	
+					}
 					else
 					{
 						buyButton.setEnabled(false);
@@ -479,11 +473,6 @@ public class mortgage
 			if(player[i].getMoney()>0)
 			{
 				int moveSpaces = dice_roll(propertyTextArea, player[i]);
-                                
-                                while(player[i].isDouble())
-                                {
-                                    moveSpaces += dice_roll(propertyTextArea, player[i]);
-                                }
 				
 				int playerLocation = player[i].getCurrentSpace();
 				
@@ -493,11 +482,11 @@ public class mortgage
                                 
 				player[i].setCurrentSpace(playerLocation);
 		
-				propertyTextArea.append( "then moves "+ moveSpaces + " spaces to "+property[playerLocation].getName());
+				propertyTextArea.append(" to "+property[playerLocation].getName()+".");
                                 
                                 // if they moved to a lower location by going forward, then they must have passed go.
-                                if( lastLoc > playerLocation | moveSpaces > 14 ){ 
-                                    propertyTextArea.append("They collect $200.");
+                                if( lastLoc > playerLocation ){ 
+                                    propertyTextArea.append("They passed go, and collect $200.");
                                     player[0].setMoney( player[0].getMoney()+200 );
                                 }
                                 propertyTextArea.append("\n");
@@ -559,8 +548,8 @@ public class mortgage
 	}
         
         // Dice rolling function
-        // Takes a player, and the log on the page, outputs the total for the roll (between 2 and 12)
-        // also sets the players double indicator at true or false
+        // Takes no input, outputs the total for the roll (between 2 and 12)
+        // also sets the global variable for if doubles were just rolled.
         public static int dice_roll(JTextArea log, Player player)
         {
             int d6_1;
@@ -571,17 +560,18 @@ public class mortgage
             d6_2 = (int) (Math.random() * 6)+1;
             total = d6_1 + d6_2;
             
-            log.append(player.getName() + " rolls : "+ d6_1 +" " + d6_2 + " ");
+            log.append(player.getName() + " rolls :"+ d6_1 +" " + d6_2);
             
             if( d6_1 == d6_2)
             {
-                log.append("(!) ");
+                log.append(" (Doubles!)");
                 player.setDouble(true);
             }
             else
             {
                 player.setDouble(false);
             }
+            log.append(", then moves "+ total + " Spaces");
 
             return total;
         }
