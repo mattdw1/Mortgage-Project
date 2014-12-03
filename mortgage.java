@@ -1,5 +1,3 @@
-package mortgage;
-
 import javax.swing.*;
 
 import java.util.*;
@@ -43,7 +41,7 @@ public class mortgage
 		gameWindow = new JFrame("Mortgage!");
 		gameWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		//Set the text on certian buttons -----------------------------------------------------------------
+		//Set the text on certain buttons -----------------------------------------------------------------
 		
 		newGame.setText("New Game!");
 		
@@ -360,6 +358,19 @@ public class mortgage
 						dontBuyButton.setEnabled(true);
 						propertyTextArea.setText(propertyTextArea.getText()+"\n\n"
 												+property[playerLocation].getName()+" is unowned! Do you wish to purchase?\n"
+												+"Investment Cost: "+Integer.toString(property[playerLocation].getPrice())+"\n"
+												+"Investment Return: "+Integer.toString(property[playerLocation].getRent())+"\n"
+												+"Upgrade Costs: "+Arrays.toString(property[playerLocation].getUpgradeCostArray())+"\n"
+												+"Interest Income: "+Arrays.toString(property[playerLocation].getRentArray()));
+					}
+					else if(property[playerLocation].getOwner() == -1)
+					{
+						buyButton.setEnabled(false);
+						dontBuyButton.setEnabled(true);
+						propertyTextArea.setText(propertyTextArea.getText()+"\n\n"
+												+property[playerLocation].getName()+" is too expensive for you.\n"								
+											//			+"Property Owner: Player "+Integer.toString(property[playerLocation].getOwner())+" ("+player[property[playerLocation].getOwner()].getName()+")"+"\n"
+														+"Property Owner: Player number "+Integer.toString(property[playerLocation].getOwner())+"\n"
 												+"Investment Cost: "+Integer.toString(property[playerLocation].getPrice())+"\n"
 												+"Investment Return: "+Integer.toString(property[playerLocation].getRent())+"\n"
 												+"Upgrade Costs: "+Arrays.toString(property[playerLocation].getUpgradeCostArray())+"\n"
