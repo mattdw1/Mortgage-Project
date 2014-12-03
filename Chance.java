@@ -1,3 +1,4 @@
+package mortgage;
 import javax.swing.JTextArea;
 
 /** This is the Chance card class.
@@ -16,6 +17,9 @@ import javax.swing.JTextArea;
 
 public class Chance {
     
+    /*
+    *   
+    */
     public static void pick_chance(JTextArea log, Property[] properties, Player[] players)
         {
             int choice = (int) (Math.random() * (5)+1);
@@ -41,8 +45,11 @@ public class Chance {
             }
         }
     
-           // Chance Card
-        // The stock market plummeted!  All players lose (5-25)% of their current funds!
+        /*
+            Chance Card
+            takes an array of players, selects a random number from 5-25, and decreases each players money by that ammount
+            The stock market plummeted!  All players lose (5-25)% of their current funds!
+        */
         static void chance_1(JTextArea log, Player[] players){
             int value;
             double percent;
@@ -60,8 +67,11 @@ public class Chance {
             }
         }
         
-        // Chance Card
-        // Great month for the stock market!  All players earn an extra (5-20)% of their current funds!
+        /*
+            Chance Card
+            takes an array of players, selects a random number from 5-20, and increases each players money by that ammount
+            Great month for the stock market!  All players earn an extra (5-20)% of their current funds!
+        */
         static void chance_2(JTextArea log, Player[] players){
             int value;
             double percent;
@@ -79,8 +89,11 @@ public class Chance {
             }
         }
         
-        // Chance Card
-        // Flash Floods!  Renovations cost $(25-100) for each property owned!
+        /*
+            Chance Card
+            takes an array of players and an array of properties, selects a random number from 25 to 100, and decreases each players money the number of properties times that random number
+            Flash Floods!  Renovations cost $(25-100) for each property owned!
+        */
         static void chance_3(JTextArea log, Player[] players, Property[] properties){
             int value;
 
@@ -102,8 +115,10 @@ public class Chance {
             }
         }
         
-        // Chance Card
-        // Bank Error!  Each player gives (5-20)% of their money to the player on the left!
+        /*
+            Chance Card
+            Bank Error!  Each player gives (5-20)% of their money to the player on the left!
+        */
         static void chance_4(JTextArea log, Player[] players){
             int value;
             double percent;
@@ -134,8 +149,10 @@ public class Chance {
             }
         }
         
-        // Chance Card
-        // Zombie Scare! All players leave, the city, and return to the start position when safe. (move all players back to start)
+        /*
+            Chance Card
+            Zombie Scare! All players leave, the city, and return to the start position when safe. (move all players back to start)
+        */
         static void chance_5(JTextArea log, Player[] players){
 
             log.append("Zombie Scare! All players leave, the city, and return to the start position when safe.\n");
